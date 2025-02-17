@@ -24,6 +24,43 @@ function isWhat(value) {
   }
 }
 
+let isAutoPlaying = false;
+let intervalId;
+
+function autoPlay () {
+  if (!isAutoPlaying) {
+    intervalId = setInterval (function () {
+      const randomNumber1 = Math.random();
+      const randomNumber2 = Math.random();
+
+      if (randomNumber1 < 1/3) {
+        computerMove = 'rock';
+      } else if (randomNumber1 < 2/3) {
+        computerMove = 'paper';
+      } else {
+        computerMove = 'scissors';
+      }
+
+      if (randomNumber2 < 1/3) {
+        calculateResult('rock');
+      } else if (randomNumber2 < 2/3) {
+        calculateResult('paper');
+      } else {
+        calculateResult('scissors');
+      }
+
+      
+    }, 1000);
+    isAutoPlaying = true;
+    document.querySelector('.js-auto-play-button').classList.add('auto-play-on');
+  } else {
+    clearInterval(intervalId);
+    isAutoPlaying = false;
+    document.querySelector('.js-auto-play-button').classList.remove('auto-play-on');
+  }
+}
+
+
 function calculateResult (value) {
   if (value=== computerMove) {
     score.ties+=1;
